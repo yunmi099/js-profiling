@@ -1,0 +1,58 @@
+{
+  "title": "Node App Overview",
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "version": 1,
+  "refresh": "5s",
+  "panels": [
+    {
+      "type": "timeseries",
+      "title": "Requests rate (rps)",
+      "gridPos": { "x": 0, "y": 0, "w": 12, "h": 8 },
+      "targets": [
+        {
+          "expr": "sum(rate(http_request_duration_seconds_count[1m]))",
+          "legendFormat": "{{route}}"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Latency p95 (s)",
+      "gridPos": { "x": 12, "y": 0, "w": 12, "h": 8 },
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket[1m])) by (le))",
+          "legendFormat": "p95"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "CPU user (cores)",
+      "gridPos": { "x": 0, "y": 8, "w": 8, "h": 8 },
+      "targets": [
+        { "expr": "rate(process_cpu_user_seconds_total[1m])", "legendFormat": "user" },
+        { "expr": "rate(process_cpu_system_seconds_total[1m])", "legendFormat": "system" }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Memory (bytes)",
+      "gridPos": { "x": 8, "y": 8, "w": 8, "h": 8 },
+      "targets": [
+        { "expr": "process_resident_memory_bytes", "legendFormat": "rss" },
+        { "expr": "nodejs_heap_size_used_bytes", "legendFormat": "heap used" }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Event loop lag (s)",
+      "gridPos": { "x": 16, "y": 8, "w": 8, "h": 8 },
+      "targets": [
+        { "expr": "nodejs_eventloop_lag_seconds", "legendFormat": "lag" }
+      ]
+    }
+  ]
+}
+
