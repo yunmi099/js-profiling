@@ -8,11 +8,12 @@ async function bootstrap() {
     logger: ['error', 'warn', 'log'],
   });
   const port = parseInt(process.env.PORT || '3000', 10);
+  const host = process.env.BIND_ADDR || '127.0.0.1';
   initDefaultMetrics();
-  await app.listen(port, '127.0.0.1');
+  await app.listen(port, host);
   // 간단한 프로파일링 시작 로그
   // eslint-disable-next-line no-console
-  console.log(`Server listening on http://127.0.0.1:${port}`);
+  console.log(`Server listening on http://${host}:${port}`);
 }
 
 bootstrap();

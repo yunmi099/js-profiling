@@ -7,6 +7,7 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3000
+      - BIND_ADDR=0.0.0.0
     ports:
       - '3000:3000'
     networks: [monitoring]
@@ -27,15 +28,19 @@ services:
       - GF_AUTH_ANONYMOUS_ENABLED=true
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer
       - GF_USERS_DEFAULT_THEME=light
+      - GF_RENDERING_ENABLED=false
     ports:
       - '3001:3000'
     volumes:
       - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources:ro
       - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards:ro
-      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - ./grafana/dashboards:/etc/grafana/dashboards:ro
+      - grafana-storage:/var/lib/grafana
     networks: [monitoring]
     depends_on: [prometheus]
 
 networks:
   monitoring: {}
 
+volumes:
+  grafana-storage: {}
