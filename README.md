@@ -39,6 +39,7 @@ docker run --rm -i --network host -e BASE_URL=http://127.0.0.1:3000 grafana/k6 r
 ## 5) 플레임그래프 보기(오프라인)
 - Speedscope CLI(로컬): `npm run speedscope:latest` (가장 최근 .cpuprofile 열기)
 - Chrome DevTools: Performance → Load profile(.cpuprofile), Memory → Load(.heapprofile)
+- 0x HTML: `npm run flame:0x` 실행 후 별도 터미널에서 `npm run k6:basic` → 종료 시 `profiles/…/flamegraph.html`
 
 ## 참고/문서
 - Linux에서 `host.docker.internal` 미동작 시 compose에 `extra_hosts: ["host.docker.internal:host-gateway"]` 추가

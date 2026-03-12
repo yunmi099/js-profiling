@@ -21,7 +21,8 @@
     "preprofile:heap": "npm run build",
     "profile:heap": "node --heap-prof --heap-prof-dir=profiles dist/main.js",
     "preprofile:inspect": "npm run build",
-    "profile:inspect": "node --inspect=127.0.0.1:9229 dist/main.js"
+    "profile:inspect": "node --inspect=127.0.0.1:9229 dist/main.js",
+    "flame:0x": "bash scripts/flame-0x.sh"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
@@ -33,6 +34,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
+    "0x": "^5.8.0",
     "speedscope": "^1.25.0",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.0.0"
