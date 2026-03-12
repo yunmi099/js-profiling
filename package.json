@@ -9,6 +9,8 @@
     "build": "tsc -p tsconfig.build.json",
     "start": "node dist/main.js",
     "start:dev": "npm run dev",
+    "k6:basic": "docker run --rm -i --network host -e BASE_URL=http://127.0.0.1:3000 grafana/k6 run - < load/k6/basic.js",
+    "k6:basic:local": "k6 run load/k6/basic.js",
     "preprofile:cpu": "npm run build",
     "profile:cpu": "node --cpu-prof --cpu-prof-dir=profiles dist/main.js",
     "preprofile:heap": "npm run build",
