@@ -11,6 +11,11 @@
     "start:dev": "npm run dev",
     "k6:basic": "docker run --rm -i --network host -e BASE_URL=http://127.0.0.1:3000 grafana/k6 run - < load/k6/basic.js",
     "k6:basic:local": "k6 run load/k6/basic.js",
+    "profile:cpu:serve": "npm run build && node --cpu-prof --cpu-prof-dir=profiles --cpu-prof-name=app-$(date +%Y%m%d-%H%M%S).cpuprofile dist/main.js",
+    "profile:heap:serve": "npm run build && node --heap-prof --heap-prof-dir=profiles --heap-prof-name=app-$(date +%Y%m%d-%H%M%S).heapprofile dist/main.js",
+    "profile:cpu:k6": "bash scripts/profile-cpu.sh",
+    "profile:heap:k6": "bash scripts/profile-heap.sh",
+    "speedscope:latest": "node -e \"const fs=require('fs');const p='profiles';const f=fs.readdirSync(p).filter(x=>x.endsWith('.cpuprofile')).map(x=>({x,t:fs.statSync(p+'/'+x).mtime})).sort((a,b)=>b.t-a.t)[0];if(!f) {console.error('no .cpuprofile');process.exit(1)} console.log(p+'/'+f.x)\" | xargs -I{} npx speedscope {}",
     "preprofile:cpu": "npm run build",
     "profile:cpu": "node --cpu-prof --cpu-prof-dir=profiles dist/main.js",
     "preprofile:heap": "npm run build",
@@ -28,6 +33,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
+    "speedscope": "^1.25.0",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.0.0"
   }
